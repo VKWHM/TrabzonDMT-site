@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ImageInformationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as DoctrineExtension;
 
 #[ORM\Entity(repositoryClass: ImageInformationRepository::class)]
 class ImageInformation
@@ -16,11 +17,13 @@ class ImageInformation
     #[ORM\Column(length: 255, unique: true)]
     private ?string $imageName = null;
 
+    #[DoctrineExtension\Timestampable(on: "create")]
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTime $createdAt = null;
 
+    #[DoctrineExtension\Timestampable(on: "update")]
     #[ORM\Column]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private ?\DateTime $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -39,24 +42,24 @@ class ImageInformation
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(\DateTime $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    public function setUpdatedAt(\DateTime $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 

@@ -68,6 +68,11 @@ class CalendarDate
         return $this->createdAt;
     }
 
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
     /**
      * @return Collection<int, CalendarEvent>
      */
