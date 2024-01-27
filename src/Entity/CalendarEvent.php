@@ -2,39 +2,66 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\CalendarEventRepository;
+use App\Trait\Timestampable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as DoctrineExtension;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CalendarEventRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Patch(),
+        new Post(),
+        new Delete(),
+    ],
+    normalizationContext: ['groups' => ['calendar_event:read']],
+    denormalizationContext: ['groups' => ['calendar_event:write']],
+)]
 class CalendarEvent
 {
+    use Timestampable;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['calendar_event:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotBlank]
+    #[Groups(['calendar_event:read', 'calendar_event:write'])]
     private ?CalendarDate $date = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Groups(['calendar_event:read', 'calendar_event:write'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 511, nullable: true)]
+    #[Groups(['calendar_event:read', 'calendar_event:write'])]
     private ?string $summary = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
+    #[Groups(['calendar_event:read', 'calendar_event:write'])]
     private ?string $content = null;
 
-    #[DoctrineExtension\Timestampable(on: "create")]
     #[ORM\Column]
-    private ?\DateTime $createdAt = null;
+    #[Groups(['calendar_event:read'])]
+    private ?\DateTimeImmutable $createdAt = null;
 
-    #[DoctrineExtension\Timestampable(on: "update")]
     #[ORM\Column]
-    private ?\DateTime $updatedAt = null;
+    #[Groups(['calendar_event:read'])]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -85,30 +112,6 @@ class CalendarEvent
     public function setContent(string $content): static
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTime
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTime $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTime $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }

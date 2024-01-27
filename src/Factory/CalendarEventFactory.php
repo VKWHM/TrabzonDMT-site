@@ -47,7 +47,7 @@ final class CalendarEventFactory extends ModelFactory
         return [
             'content' => self::faker()->paragraph(20),
             'summary' => self::faker()->paragraph(),
-            'createdAt' => self::faker()->dateTime(),
+            'createdAt' => self::faker()->datetime(),
             'date' => CalendarDateFactory::randomOrCreate(),
             'title' => self::faker()->words(10, true),
             'updatedAt' => self::faker()->dateTime(),

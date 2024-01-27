@@ -45,7 +45,8 @@ final class CalendarDateFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+//            'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+//            'updatedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'day' => self::faker()->numberBetween(1, 32),
             'month' => self::faker()->numberBetween(1, 12),
         ];

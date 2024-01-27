@@ -2,37 +2,77 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 use App\Repository\CalendarDateRepository;
+use App\Trait\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: CalendarDateRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(),
+        new Delete(),
+    ],
+    normalizationContext: ['groups' => ['calendar_date:read']],
+    denormalizationContext: ['groups' => ['calendar_date:write']],
+)]
+#[ApiFilter(NumericFilter::class, properties: ['day', 'month'])]
+#[UniqueEntity(
+    fields: ['day', 'month'],
+    message: "This date already exists in the database.",
+    errorPath: 'day',
+)]
 class CalendarDate
 {
+    use Timestampable;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['calendar_date:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\NotBlank()]
+    #[Assert\Range(min: 1, max: 31)]
+    #[Groups(['calendar_date:read', 'calendar_date:write', 'calendar_event:read'])]
     private ?int $day = null;
 
-    public function __construct()
-    {
-        $this->createdAt = new \DateTimeImmutable();
-        $this->events = new ArrayCollection();
-    }
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\NotBlank()]
+    #[Assert\Range(min: 1, max: 12)]
+    #[Groups(['calendar_date:read', 'calendar_date:write', 'calendar_event:read'])]
     private ?int $month = null;
 
     #[ORM\Column]
+    #[Groups(['calendar_date:read'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\OneToMany(mappedBy: 'date', targetEntity: CalendarEvent::class)]
+    #[Groups(['calendar_date:read'])]
     private Collection $events;
+
+    public function __construct()
+    {
+//        $this->createdAt = new \DateTimeImmutable();
+        $this->events = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -61,16 +101,6 @@ class CalendarDate
         $this->month = $month;
 
         return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): void
-    {
-        $this->createdAt = $createdAt;
     }
 
     /**
