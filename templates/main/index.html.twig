@@ -9,22 +9,6 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/whoami/Documents/GitHub/TrabzonDMT-site/src/Controller/MainController.php'|file_link(0) }}">src/Controller/MainController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/whoami/Documents/GitHub/TrabzonDMT-site/templates/main/index.html.twig'|file_link(0) }}">templates/main/index.html.twig</a></code></li>
-    </ul>
-    {% if date %}
-        <h2>Day: {{ date.day }}, Month: {{ date.month }}</h2>
-        {% for event in date.events %}
-            <h3>{{ event.title }}</h3>
-            <p><b>Summary: </b> {{ event.summary }}</p>
-            <p><b>Cotent:</b> {{ event.content }}</p>
-        {% else %}
-            <p>No events found</p>
-        {% endfor %}
-    {% endif %}
+    <div id="root"></div>
 </div>
 {% endblock %}

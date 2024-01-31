@@ -5,9 +5,19 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
+            {{ vite_entry_link_tags('app') }}
         {% endblock %}
 
+        <script>var global = window</script>
+        <script type="module">
+            import RefreshRuntime from "http://localhost:3000/build/@react-refresh"
+            RefreshRuntime.injectIntoGlobalHook(window)
+            window.$RefreshReg$ = () => {}
+            window.$RefreshSig$ = () => (type) => type
+            window.__vite_plugin_react_preamble_installed__ = true
+        </script>
         {% block javascripts %}
+            {{ vite_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>

@@ -1,22 +1,24 @@
 import {defineConfig} from 'vite'
 import react from '@vitejs/plugin-react'
+import symfonyPlugin from "vite-plugin-symfony";
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react()],
-    root: 'assets',
-    base: '/dist/',
-
+    plugins: [
+        react(),
+        symfonyPlugin(),
+    ],
     build: {
-        outDir: resolve(__dirname, 'public/dist'),
+        outDir: './public/build',
         emptyOutDir: true,
         manifest: true,
-        target: 'es2018',
         rollupOptions: {
-            input: '/js/app.js'
+            input: {
+                app: './assets/main.tsx'
+            },
         },
     },
-
     server: {
         cors: true,
         strictPort: true,

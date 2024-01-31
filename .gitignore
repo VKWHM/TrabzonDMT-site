@@ -81,3 +81,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+###> pentatrion/vite-bundle ###
+/node_modules/
+/public/build/
+###< pentatrion/vite-bundle ###
