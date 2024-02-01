@@ -10,22 +10,28 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
-    #[Route('/', name: 'app_main', methods: ['GET', 'HEAD'])]
-    public function index(
-        CalendarDateRepository $calendarDateRepository,
-        #[MapQueryParameter(
-            name: "id",
-            filter: \FILTER_VALIDATE_REGEXP,
-            options: ['regexp' => '/^\d{1,4}$/']
-        )] ?int $id = null,
-    ): Response {
-        if ($id) {
-            $date = $calendarDateRepository->find($id) or throw $this->createNotFoundException("Date not found");
-        }
+  #[Route('/', name: 'app_main', methods: ['GET', 'HEAD'])]
+  public function index(
+      CalendarDateRepository $calendarDateRepository,
+      #[MapQueryParameter(
+          name: "id",
+          filter: \FILTER_VALIDATE_REGEXP,
+          options: ['regexp' => '/^\d{1,4}$/']
+      )] ?int $id = null,
+  ): Response {
+      if ($id) {
+          $date = $calendarDateRepository->find($id) or throw $this->createNotFoundException("Date not found");
+      }
 
-        return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
-            'date' => $date ?? null,
-        ]);
-    }
+      return $this->render('main/index.html.twig', [
+          'controller_name' => 'MainController',
+          'date' => $date ?? null,
+      ]);
+  }
+
+  #[Route('tdmt_admin', name: 'app_admin', methods: ['GET', 'HEAD'])]
+  public function admin(): Response
+  {
+    return $this->render('main/admin.html.twig');
+  } 
 }

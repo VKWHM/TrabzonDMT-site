@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
@@ -33,6 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     denormalizationContext: ['groups' => ['calendar_date:write']],
 )]
 #[ApiFilter(NumericFilter::class, properties: ['day', 'month'])]
+#[ApiFilter(OrderFilter::class, properties: ['day', 'month'])]
 #[UniqueEntity(
     fields: ['day', 'month'],
     message: "This date already exists in the database.",

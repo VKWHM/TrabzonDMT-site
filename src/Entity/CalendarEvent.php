@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\CalendarEventRepository;
 use App\Trait\Timestampable;
 use Doctrine\DBAL\Types\Types;
@@ -19,13 +23,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     operations: [
         new Get(),
+        new GetCollection(),
         new Patch(),
+        new Put(),
         new Post(),
         new Delete(),
     ],
     normalizationContext: ['groups' => ['calendar_event:read']],
     denormalizationContext: ['groups' => ['calendar_event:write']],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['title', 'summary', 'content'])]
 class CalendarEvent
 {
     use Timestampable;
