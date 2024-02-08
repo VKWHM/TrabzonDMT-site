@@ -14,14 +14,14 @@ trait Timestampable
     #[ORM\PrePersist()]
     public function prePersist(): void
     {
-        $this->createdAt = new \DateTimeImmutable();
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Istanbul'));
+        $this->updatedAt = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Istanbul'));
     }
 
     #[ORM\PreUpdate()]
     public function preUpdate(): void
     {
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Istanbul'));
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
