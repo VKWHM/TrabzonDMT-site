@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -24,10 +24,10 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new Get(),
         new GetCollection(),
-        new Patch(),
-        new Put(),
-        new Post(),
-        new Delete(),
+        new Patch(security: "is_granted('ROLE_ADMIN')"),
+        new Put(security: "is_granted('ROLE_ADMIN')"),
+        new Post(security: "is_granted('ROLE_ADMIN')"),
+        new Delete(security: "is_granted('ROLE_ADMIN')"),
     ],
     normalizationContext: ['groups' => ['calendar_event:read']],
     denormalizationContext: ['groups' => ['calendar_event:write']],
