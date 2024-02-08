@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ApiToken;
 use App\Repository\CalendarDateRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -39,9 +40,25 @@ class MainController extends AbstractController
     }
 
     #[Route('/tdmt_admin/login', name: 'app_admin_login', methods: ['POST'])]
-    public function admin_login(EntityManagerInterface $manager, #[CurrentUser] $user): Response
+    public function admin_login(
+        EntityManagerInterface $manager,
+        LoggerInterface $logger,
+        #[CurrentUser] $user
+    ): Response
     {
-        $api_token = ApiToken::new($user);
+        try {
+            $api_token = ApiToken::new(
+                $user,
+                new \DateTimeImmutable(
+                    "+".$this->getParameter('app.api_token_lifetime'),
+                    new \DateTimeZone('Europe/Istanbul'),
+                )
+            );
+        } catch (\Exception $e) {
+            $logger->error('Could not create token: '.$e->getMessage());
+
+            return $this->json(['error' => 'Could not create token'], 500);
+        }
         $manager->persist($api_token);
         $manager->flush();
 

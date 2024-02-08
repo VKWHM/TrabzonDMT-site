@@ -20,6 +20,29 @@ class ApiToken
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $expiration = null;
+
+    public static function new(User $user, \DateTimeImmutable $expireAfter): static
+    {
+        $apiToken = new static();
+        $apiToken->setUser($user);
+        $apiToken->setToken(self::generateToken());
+        $apiToken->setExpiration($expireAfter);
+
+        return $apiToken;
+    }
+
+    public function isValid(): bool
+    {
+        return $this->getExpiration() > new \DateTimeImmutable();
+    }
+
+    protected static function generateToken(): string
+    {
+        return rtrim(strtr(base64_encode(random_bytes(128)), '+/', '-_'), '=');
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -49,17 +72,15 @@ class ApiToken
         return $this;
     }
 
-    public static function generateToken(): string
+    public function getExpiration(): ?\DateTimeImmutable
     {
-        return rtrim(strtr(base64_encode(random_bytes(128)), '+/', '-_'), '=');
+        return $this->expiration;
     }
 
-    public static function new(User $user): static
+    public function setExpiration(\DateTimeImmutable $expiration): static
     {
-        $apiToken = new static();
-        $apiToken->setUser($user);
-        $apiToken->setToken(self::generateToken());
+        $this->expiration = $expiration;
 
-        return $apiToken;
+        return $this;
     }
 }
