@@ -5,7 +5,7 @@ export const authProvider: AuthProvider = {
     login: async ({username, password}) => {
         const request = new Request( `${import.meta.env.VITE_ADMIN_URL}/login`, {
             method: 'POST',
-            body: JSON.stringify({email: username, password}),
+            body: JSON.stringify({username, password}),
             headers: new Headers({'Content-Type': 'application/json'}),
         });
         const response = await fetch(request);
