@@ -8,14 +8,18 @@
     </head>
     <body>
         {% block body %}{% endblock %}
-    </body>
-    <script>var global = window</script>
-    <script type="module">
-        import RefreshRuntime from "http://localhost:3000/build/@react-refresh"
-        RefreshRuntime.injectIntoGlobalHook(window)
-        window.$RefreshReg$ = () => {}
-        window.$RefreshSig$ = () => (type) => type
-        window.__vite_plugin_react_preamble_installed__ = true
-    </script>
+        {% if app.environment == 'dev' %}
+            <script>var global = window</script>
+            <script type="module">
+                import RefreshRuntime from "http://localhost:3000/build/@react-refresh"
+
+                RefreshRuntime.injectIntoGlobalHook(window)
+                window.$RefreshReg$ = () => {
+                }
+                window.$RefreshSig$ = () => (type) => type
+                window.__vite_plugin_react_preamble_installed__ = true
+            </script>
+        {% endif %}
     {% block javascripts %}{% endblock %}
+    </body>
 </html>
