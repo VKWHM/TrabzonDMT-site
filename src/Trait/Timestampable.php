@@ -11,6 +11,9 @@ trait Timestampable
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    /**
+     * @throws \Exception
+     */
     #[ORM\PrePersist()]
     public function prePersist(): void
     {
@@ -18,6 +21,9 @@ trait Timestampable
         $this->updatedAt = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Istanbul'));
     }
 
+    /**
+     * @throws \Exception
+     */
     #[ORM\PreUpdate()]
     public function preUpdate(): void
     {

@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-// TODO: Implement ClearExpiredTokensCommand
 
 #[AsCommand(
     name: 'app:tokens:clear-expired',

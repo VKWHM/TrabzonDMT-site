@@ -55,9 +55,10 @@ function App() {
                 create={EventCreate}
                 recordRepresentation={"title"}
             />
+            <ResourceGuesser name={'users'} />
         </HydraAdmin>
 
-    )
+    );
 }
 
 export default App
