@@ -12,8 +12,11 @@ export const authProvider: AuthProvider = {
         if (response.status < 200 || response.status >= 300) {
             throw new Error(response.statusText);
         }
-        const auth = await response.json();
-        localStorage.setItem('auth', auth.token);
+        const {token, expires_at} = await response.json();
+        localStorage.setItem('auth', JSON.stringify({
+            token,
+            expires_at,
+        }));
     },
     // called when the user clicks on the logout button
     logout: () => {
@@ -26,8 +29,8 @@ export const authProvider: AuthProvider = {
         return Promise.resolve();
     },
     // called when the API returns an error
-    checkError: ({ status }) => {
-        if (status === 401 || status === 403) {
+    checkError: (error) => {
+        if (error instanceof SyntaxError) {
             localStorage.removeItem('auth');
             return Promise.reject();
         }
@@ -35,7 +38,16 @@ export const authProvider: AuthProvider = {
     },
     // called when the user navigates to a new location
     checkAuth: () => {
-        return localStorage.getItem('auth') ? Promise.resolve() : Promise.reject();
+        const auth = localStorage.getItem('auth');
+        if (!auth) {
+            return Promise.reject();
+        }
+        const {expires_at} = JSON.parse(auth);
+        if (new Date(expires_at) < new Date()) {
+            localStorage.removeItem('auth');
+            return Promise.reject();
+        }
+        return Promise.resolve();
     },
     // called when the user navigates to a new location
     getPermissions: () => {

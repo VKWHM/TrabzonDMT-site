@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\ApiToken;
 use App\Repository\ApiTokenRepository;
 use DateTimeImmutable;
-use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Psr\Log\LoggerInterface;
@@ -13,8 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class AdminController extends AbstractController
@@ -36,8 +34,7 @@ class AdminController extends AbstractController
                 $user,
                 new DateTimeImmutable(
                     "+".$this->getParameter('app.api_token_lifetime'),
-                    new DateTimeZone('Europe/Istanbul'),
-                )
+                ),
             );
         } catch (Exception $e) {
             $logger->error('Could not create token: '.$e->getMessage());
@@ -50,6 +47,7 @@ class AdminController extends AbstractController
         return $this->json([
             'id' => $user->getUserIdentifier(),
             'token' => $api_token->getToken(),
+            'expires_at' => $api_token->getExpiration()->format(DATE_ATOM),
         ]);
     }
 
@@ -69,6 +67,6 @@ class AdminController extends AbstractController
 
             return new Response('', 204);
         }
-        throw new NotFoundHttpException();
+        throw $this->createNotFoundException();
     }
 }

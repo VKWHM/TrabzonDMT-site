@@ -12,8 +12,8 @@ import {authProvider} from "./components/utils/authProvider";
 const MyAppBar = () => <AppBar toolbar={<ToggleThemeButton/>}/>;
 const MyLayout = (props: any) => <Layout {...props} appBar={MyAppBar}/>
 
-const getHeaders = () => localStorage.getItem("auth") ? {
-    Authorization: `Bearer ${localStorage.getItem("auth")}`,
+const getHeaders = () => localStorage.getItem("auth") !== null ? {
+    Authorization: `Bearer ${JSON.parse(localStorage.getItem("auth")!).token}`,
 } : {};
 const fetchHydra = (url: URL, options: Options = {}) =>
     baseFetchHydra(url, {
