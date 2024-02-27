@@ -1,5 +1,5 @@
-import {defineConfig} from 'vite'
-import react from '@vitejs/plugin-react'
+import {defineConfig} from 'vite';
+import react from '@vitejs/plugin-react';
 import symfonyPlugin from "vite-plugin-symfony";
 
 
@@ -15,7 +15,8 @@ export default defineConfig({
         manifest: true,
         rollupOptions: {
             input: {
-                admin: './assets/admin/main.tsx'
+                admin: './assets/admin/main.tsx',
+                app: './assets/app/main.tsx',
             },
         },
     },

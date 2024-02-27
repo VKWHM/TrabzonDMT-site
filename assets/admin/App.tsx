@@ -1,11 +1,9 @@
-import {Layout, Options} from "react-admin";
-import {HydraAdmin, fetchHydra as baseFetchHydra, hydraDataProvider, ResourceGuesser} from "@api-platform/admin";
+import {AppBar, Layout, Options, ToggleThemeButton} from "react-admin";
+import {fetchHydra as baseFetchHydra, HydraAdmin, hydraDataProvider, ResourceGuesser} from "@api-platform/admin";
 import {parseHydraDocumentation} from "@api-platform/api-doc-parser";
-import {AppBar, ToggleThemeButton} from "react-admin";
 import {DateList, EventList} from "./components/Lists";
-import {EventShow, DateShow} from "./components/Shows";
-import {EventCreate} from "./components/Creates.tsx"
-import './App.css'
+import {DateShow, EventShow} from "./components/Shows";
+import {EventCreate} from "./components/Creates.tsx";
 import {EventEdit} from "./components/Edits.tsx";
 import {authProvider} from "./components/utils/authProvider";
 

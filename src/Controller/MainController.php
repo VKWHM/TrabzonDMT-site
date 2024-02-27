@@ -23,7 +23,7 @@ class MainController extends AbstractController
             $date = $calendarDateRepository->find($id) or throw $this->createNotFoundException("Date not found");
         }
 
-        return $this->render('main/index.html.twig', [
+        return $this->render('main/app.html.twig', [
             'controller_name' => 'MainController',
             'date' => $date ?? null,
         ]);
