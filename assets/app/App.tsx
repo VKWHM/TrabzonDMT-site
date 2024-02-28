@@ -1,8 +1,12 @@
+import Footer from './footer';
+import Navbar from './navbar';
+
 const App: React.FC = () => {
     return (
-        <div className={'text-2xl font-bold underline text-red-500'}>
-            Hello World
-        </div>
+        <>
+            <Navbar/>
+            <Footer/>
+        </>
     );
 };
 export default App;
