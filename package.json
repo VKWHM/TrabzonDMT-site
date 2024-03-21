@@ -17,6 +17,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@material-tailwind/react": "^2.1.9",
+    "fast-average-color": "^9.4.0",
     "ra-data-simple-rest": "^4.16.10",
     "ra-input-rich-text": "^4.16.8",
     "react": "^18.2.0",
