@@ -20,17 +20,17 @@ export const DaySelector: React.FC<{ month: string }> = ({month}) => {
     }, [month]);
     return (
         <div
-            className={'mx-auto w-[400px] sm:w-[500px] md:w-[650px] lg:w-[900px] mt-1 py-2 border-t-2 border-t-black rounded-t shadow'}>
+            className={'mx-auto w-[300px] sm:w-[500px] md:w-[650px] lg:w-[900px] mt-1 py-2 border-t-2 border-t-black rounded-t-lg shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 bg-white'}>
             <div className={'relative mx-3 flex gap-4'}>
                 <div ref={daysContainerRef} className={'flex gap-4 items-center overflow-x-auto hide-scrollbar'}>
                     {days.map((day, index) => (
                         <IconButton
                             disabled={day === currentDay}
-                            variant={'outlined'}
+                            color={'white'}
                             key={`${day}_${index}`}
                             size={'sm'}
                             id={`day-${day}`}
-                            className={'p-4'}
+                            className={'p-4 shadow-md font-bold'}
                             onClick={() => setDay(day)}
                             placeholder={undefined}>{day}</IconButton>
                     ))}

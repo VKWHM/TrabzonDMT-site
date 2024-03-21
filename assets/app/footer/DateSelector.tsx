@@ -18,8 +18,8 @@ const DateSelector: React.FC = () => {
         setCurrentMonth(months[(((currentIndex - 1) % 12) + 12) % 12]);
     };
     return (
-        <div className={'w-full pt-2 border-b-2 border-b-black'}>
-            <div className={'mx-auto w-fit flex items-center'}>
+        <div className={'relative w-full pt-2 border-b-2 border-b-black'}>
+            <div className={'mx-auto w-fit flex items-center '}>
                 <IconButton
                     size={'md'}
                     onClick={previousMonth}
@@ -29,7 +29,7 @@ const DateSelector: React.FC = () => {
                 <Menu allowHover={true}>
                     <MenuHandler placeholder={undefined}>
                         <Button
-                            className={'mx-2 px-0 min-w-32 shadow'}
+                            className={'mx-2 px-0 min-w-32 shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 border border-white/80 bg-white'}
                             variant={'text'}
                             size={'sm'}
                             placeholder={undefined}>

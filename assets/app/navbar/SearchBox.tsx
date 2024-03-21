@@ -15,7 +15,7 @@ const SearchBox = () => {
                 value={search}
                 className="pr-20"
                 containerProps={{
-                    className: "min-w-[288px]",
+                    className: "min-w-[288px] rounded-full",
                 }}
                 onChange={(e) => setSearch(e.target.value)}
                 crossOrigin={undefined}

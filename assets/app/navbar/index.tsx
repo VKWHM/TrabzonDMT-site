@@ -15,9 +15,9 @@ function NavList() {
                 color="gray"
                 className="font-medium"
             >
-                <MenuItem className={'flex items-center gap-2 lg:rounded-full'}
+                <MenuItem className={'flex items-center gap-2 lg:rounded-md'}
                           placeholder={undefined}>
-                    <FontAwesomeIcon icon={faInfoCircle} className={'h-[18px] w-[18px]'}/>
+                    <FontAwesomeIcon icon={faInfoCircle} className={'h-[20px] w-[20px]'}/>
                     <span className="font-bold">
                         Hakkımızda
                     </span>
@@ -46,7 +46,7 @@ export function NavbarSimple() {
         <Navbar
             fullWidth={true}
             placeholder={undefined}
-            className="mx-auto w-full px-6 py-3 fixed">
+            className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-1 lg:px-8 lg:py-2">
             <div className="flex items-center justify-between text-blue-gray-900">
                 <Typography
                     placeholder={undefined}
