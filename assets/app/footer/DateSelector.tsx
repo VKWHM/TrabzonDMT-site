@@ -19,7 +19,7 @@ const DateSelector: React.FC = () => {
     };
     return (
         <div className={'relative w-full pt-2 border-b-2 border-b-black'}>
-            <div className={'mx-auto w-fit flex items-center '}>
+            <div className={'mx-auto w-fit flex items-center pointer-events-auto'}>
                 <IconButton
                     size={'md'}
                     onClick={previousMonth}

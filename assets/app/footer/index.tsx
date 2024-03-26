@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
   return (
       <footer
           className={
-            "sticky bottom-0 z-10 h-max w-full max-w-full flex-shrink-0 rounded-none"
+              "sticky bottom-0 z-10 h-max w-full max-w-full flex-shrink-0 rounded-none pointer-events-none"
           }
       >
         {/*Date Tabs*/}

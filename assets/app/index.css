@@ -8,6 +8,36 @@
 }
 
 ::-webkit-scrollbar {
-    width: 0px; /* remove scrollbar space */
+    width: 0; /* remove scrollbar space */
     background: transparent; /* optional: just make scrollbar invisible */
 }
+
+
+/*Start body*/
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    transition: background-color 0.5s;
+    @apply bg-gray-100/80
+}
+
+/*End body*/
+
+/* Start WeeklyTimeline.tsx */
+@keyframes view {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.timeline-item {
+    animation: view 0.5s;
+}
+
+/* End WeeklyTimeline.tsx */

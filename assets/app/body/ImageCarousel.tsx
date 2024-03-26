@@ -1,17 +1,14 @@
 import {faAnglesLeft, faAnglesRight} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Carousel, IconButton} from "@material-tailwind/react";
+import {Carousel, IconButton, Typography} from "@material-tailwind/react";
+import {FastAverageColor} from "fast-average-color";
 
 import {useCallback, useState} from "react";
 
-const e_images = [
-    "https://trabzondmt.com.tr/data/images/image-52.jpeg",
-    "https://trabzondmt.com.tr/data/images/image-51.jpeg",
-    "https://trabzondmt.com.tr/data/images/image-58.jpeg",
-    "https://trabzondmt.com.tr/data/images/image-59.jpeg",
-    "https://trabzondmt.com.tr/data/images/image-54.jpeg",
-    "https://trabzondmt.com.tr/data/images/image-53.jpeg",
-];
+const e_images: string[] = [];
+for (let i = 1; i < 10; i++) {
+    e_images.push(`/images/image-5${i}.jpeg`);
+}
 
 type prevArrow = (args: {
     loop: boolean;
@@ -34,30 +31,18 @@ type navigation = (args: {
 }) => React.ReactNode | void;
 
 function getImageAverageColor(currentImageIndex: number) {
-    // TODO: Fix cross origin error
-    // const fac = new FastAverageColor();
-    // const currentImage = document.querySelector(`#carousel-image-${currentImageIndex}`) as HTMLImageElement;
-    // const {isDark} = fac.getColor(currentImage);
-    // return isDark;
-    return true;
+    const fac = new FastAverageColor();
+    const currentImage = document.querySelector(`#carousel-image-${currentImageIndex}`) as HTMLImageElement;
+    if (!currentImage) {
+        return true;
+    }
+    const {isLight} = fac.getColor(currentImage);
+    return isLight;
 }
 
-function displayHiddenImage(currentImageIndex: number, prev: boolean) {
-    const beforeCurrentImage = document.querySelector(`#carousel-image-${currentImageIndex + (prev ? 1 : -1)}`) as HTMLImageElement;
-    const currentImage = document.querySelector(`#carousel-image-${currentImageIndex}`) as HTMLImageElement;
-    // if (beforeCurrentImage) {
-    //     beforeCurrentImage.classList.toggle("hidden");
-    // }
-    // if (currentImage) {
-    //     currentImage.classList.toggle("hidden");
-    // }
-}
 
 export function ImageCarousel() {
-    const [images, setImages] = useState([
-        "https://trabzondmt.com.tr/data/images/image-57.jpeg",
-        "https://trabzondmt.com.tr/data/images/image-56.jpeg",
-    ]);
+    const [images, setImages] = useState<string[]>(['/images/image-51.jpeg', '/images/image-52.jpeg']);
     const addImage = useCallback((callback: () => void) => {
         setImages(prev => {
             const next = e_images.shift();
@@ -77,10 +62,9 @@ export function ImageCarousel() {
                 placeholder={undefined}
                 variant="text"
                 color={isDark ? "white" : "black"}
-                size="lg"
+                size="md"
                 onClick={() => {
                     handlePrev();
-                    displayHiddenImage(activeIndex, true);
                 }}
                 className="!absolute top-2/4 !left-4 -translate-y-2/4 bg-gray-400/50">
                 <FontAwesomeIcon icon={faAnglesLeft} size={'2xl'}/>
@@ -97,10 +81,9 @@ export function ImageCarousel() {
                 placeholder={undefined}
                 variant="text"
                 color={isDark ? "white" : "black"}
-                size="lg"
+                size="md"
                 onClick={() => {
                     addImage(handleNext);
-                    displayHiddenImage(activeIndex, false);
                 }}
                 className="!absolute top-2/4 !right-4 -translate-y-2/4 bg-gray-400/50">
                 <FontAwesomeIcon icon={faAnglesRight} size={'2xl'}/>
@@ -110,14 +93,13 @@ export function ImageCarousel() {
 
     const navigation: navigation = useCallback(({setActiveIndex, activeIndex, length}) => {
         const isDark = getImageAverageColor(activeIndex);
-        const color = isDark ? "bg-white" : "bg-black";
         return (
-            <div className="absolute bottom-4 left-2/4 z-5 flex -translate-x-2/4 gap-2">
+            <div className="absolute bottom-6 left-2/4 z-5 flex -translate-x-2/4 gap-2">
                 {new Array(length).fill("").map((_, i) => (
                     <span
                         key={i}
                         className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                            activeIndex === i ? `w-8 ${color}` : `w-4 ${color}/50`
+                            activeIndex === i ? `w-8 ${isDark ? "bg-white" : "bg-black"}` : `w-4 ${isDark ? "bg-white/50" : "bg-gray-900/50"}`
                         }`}
                         onClick={() => {
                             if (i + 1 === length) {
@@ -132,51 +114,35 @@ export function ImageCarousel() {
     }, []);
 
     return (
-        <Carousel
-            prevArrow={prevArrow}
-            nextArrow={nextArrow}
-            placeholder={undefined}
-            className="relative rounded-xl md:w-3/4 lg:w-4/6 h-fit min-h-0 max-h-96 mx-auto bg-gray-300 flex items-center"
-            navigation={navigation}
-        >
-            <img
-                src="http://localhost:8001/image.jpeg"
-                alt="image 1"
-                className="h-fit max-h-56 sm:max-h-96 mx-auto object-cover"
-            />
-            {/*<div className="relative h-full w-full">*/}
-            {/*    <img*/}
-            {/*        src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"*/}
-            {/*        alt="image 1"*/}
-            {/*        className="h-96 mx-auto object-cover"*/}
-            {/*    />*/}
-            {/*    <div className="absolute inset-0 grid h-full w-full place-items-center bg-black/75">*/}
-            {/*        <div className="w-3/4 text-center md:w-2/4">*/}
-            {/*            <Typography*/}
-            {/*                color="white"*/}
-            {/*                as={'p'}*/}
-            {/*                placeholder={undefined}*/}
-            {/*                className="font-bold">*/}
-            {/*                The Beauty of Nature*/}
-            {/*                It is not so much for its beauty that the forest makes a claim*/}
-            {/*                upon men&apos;s hearts, as for that subtle something, that quality*/}
-            {/*                of air that emanation from old trees, that so wonderfully changes*/}
-            {/*                and renews a weary spirit.*/}
-            {/*            </Typography>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-
-            {images.map((image, index) => (
+        <div className={'shadow-md rounded-xl'}>
+            <div className={'bg-white/70 p-2 rounded-t-xl text-center'}>
+                <Typography variant={'small'} placeholder={undefined}>
+                    alttaki fotoğrafın açıklaması burada bulunacak
+                </Typography>
+            </div>
+            <Carousel
+                prevArrow={prevArrow}
+                nextArrow={nextArrow}
+                placeholder={undefined}
+                className="relative h-fit min-h-0 max-h-[100vh] ml-auto bg-transparent flex items-center rounded-b-xl border border-t-gray-500"
+                navigation={navigation}
+            >
                 <img
-                    key={index}
-                    src={image}
-                    alt={`image ${index}`}
-                    id={`carousel-image-${index}`}
-                    className="transition h-fit max-h-56 sm:max-h-96 object-contain mx-auto"
+                    src="/images/image.jpeg"
+                    alt="image 1"
+                    className="h-fit max-h-56 sm:max-h-96 mx-auto object-cover"
                 />
-            ))}
-        </Carousel>
+                {images.map((image, index) => (
+                    <img
+                        key={index}
+                        src={image}
+                        alt={`image ${index}`}
+                        id={`carousel-image-${index}`}
+                        className="transition h-fit max-h-56 sm:max-h-96 object-contain mx-auto"
+                    />
+                ))}
+            </Carousel>
+        </div>
     );
 }
 
