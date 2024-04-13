@@ -14,7 +14,7 @@ const WeeklyTimeline: React.FC = () => {
     return (
         <Timeline>
             {weekDays.map((day, index) => (
-                <TimelineItem key={`weekly_timeline_day_${index}`} className="h-20 timeline-item">
+                <TimelineItem key={`weekly_timeline_day_${index}`} className="h-20 md:h-1/2 lg:h-16 timeline-item">
                     {index !== weekDays.length - 1 && <TimelineConnector className={'!w-[76px]'}/>}
                     <ListItem
                         placeholder={undefined}
@@ -25,13 +25,13 @@ const WeeklyTimeline: React.FC = () => {
                                 {day}
                             </TimelineIcon>
                             <div className="flex flex-col gap-1">
-                                <Typography color="blue-gray" className={'font-bold text-sm'}
+                                <Typography color="blue-gray" className={'font-bold text-[.8rem]'}
                                             id={'weekly-timeline-title'}
                                             placeholder={undefined}>
                                     Mart ayının {day} gününde olan olayın başlığı
                                 </Typography>
                                 <Typography placeholder={undefined} variant="small" color="gray"
-                                            className="font-normal">
+                                            className="font-normal text-[.8rem]">
                                     {index + 1} Mart
                                 </Typography>
                             </div>
