@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useState} from "react";
 import {faCaretLeft, faCaretRight} from "@fortawesome/free-solid-svg-icons";
 import {DaySelector} from "./components/DaySelector.tsx";
-import ChangeTransition from "./components/ChangeTransition.tsx";
+import ChangeTransition from "../components/ChangeTransition.tsx";
 
 export const year = new Date().getFullYear();
 export const months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];

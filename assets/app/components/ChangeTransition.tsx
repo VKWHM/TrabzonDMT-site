@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 
-const ChangeTransition: React.FC<{ children: React.ReactNode }> = ({children}) => {
+const ChangeTransition: React.FC<{ state?: any, children: React.ReactNode }> = ({state: newState, children}) => {
+    const state = newState !== undefined ? newState : children;
     const [displayedChildren, setDisplayedChildren] = useState(children);
     const [opacity, setOpacity] = useState<number>(1);
 
@@ -12,7 +13,7 @@ const ChangeTransition: React.FC<{ children: React.ReactNode }> = ({children}) =
             setOpacity(1);
         }, 300);
         return () => clearTimeout(timer);
-    }, [children]);
+    }, [state]);
 
     return (
         <span style={{transition: 'opacity 0.25s', opacity}}>

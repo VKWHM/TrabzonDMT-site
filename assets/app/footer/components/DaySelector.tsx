@@ -3,7 +3,7 @@ import {IconButton, Menu, MenuHandler, MenuItem, MenuList, Typography} from "@ma
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendarDays} from "@fortawesome/free-solid-svg-icons";
 import {months, year} from "../DateSelector.tsx";
-import ChangeTransition from "./ChangeTransition.tsx";
+import ChangeTransition from "../../components/ChangeTransition.tsx";
 
 const getDaysInMonth = (month: number, year: number) => {
     // Month is 0-based in JavaScript Date, so we need to add 1 when creating the date
@@ -26,11 +26,12 @@ export const DaySelector: React.FC<{ month: string }> = ({month}) => {
                     {days.map((day, index) => (
                         <IconButton
                             disabled={day === currentDay}
-                            color={'white'}
+                            // color={'white'}
+                            variant={'outlined'}
                             key={`${day}_${index}`}
                             size={'sm'}
                             id={`day-${day}`}
-                            className={'p-4 shadow-md font-bold'}
+                            className={'p-4 font-bold'}
                             onClick={() => setDay(day)}
                             placeholder={undefined}>{day}</IconButton>
                     ))}

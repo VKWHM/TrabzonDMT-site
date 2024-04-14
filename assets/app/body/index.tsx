@@ -13,9 +13,7 @@ const Body = () => {
                     <WeeklyTimeline/>
                 </div>
             </div>
-            <div className={'mx-3 grid grid-cols-6 w-full'}>
-                <ReadSection/>
-            </div>
+            <ReadSection/>
         </div>
     );
 };
