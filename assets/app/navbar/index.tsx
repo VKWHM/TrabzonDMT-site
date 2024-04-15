@@ -2,7 +2,6 @@ import React from "react";
 import {Collapse, IconButton, MenuItem, Navbar, Typography} from "@material-tailwind/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faInfoCircle, faXmark} from "@fortawesome/free-solid-svg-icons";
-import SearchBox from './SearchBox.tsx';
 
 function NavList() {
     return (
@@ -23,7 +22,6 @@ function NavList() {
                     </span>
                 </MenuItem>
             </Typography>
-            <SearchBox/>
         </ul>
     );
 }

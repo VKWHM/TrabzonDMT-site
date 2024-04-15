@@ -12,6 +12,12 @@
     background: transparent; /* optional: just make scrollbar invisible */
 }
 
+/*Start Shortcuts*/
+.my-shadow {
+    @apply shadow-lg shadow-blue-gray-900/5
+}
+
+/*End Shortcuts*/
 
 /*Start body*/
 body {
@@ -41,3 +47,4 @@ body {
 }
 
 /* End WeeklyTimeline.tsx */
+

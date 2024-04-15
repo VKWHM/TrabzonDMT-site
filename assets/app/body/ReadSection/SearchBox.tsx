@@ -7,15 +7,14 @@ import {useState} from "react";
 const SearchBox = () => {
     const [search, setSearch] = useState<string>("");
     return (
-        <div className="relative flex w-full gap-2 md:w-max">
+        <div className="relative flex w-full gap-2">
             <Input
                 type="search"
                 color="black"
                 label="Search"
                 value={search}
-                className="pr-20"
                 containerProps={{
-                    className: "min-w-[288px] rounded-full",
+                    className: "min-w-[165px] w-full rounded-full",
                 }}
                 onChange={(e) => setSearch(e.target.value)}
                 crossOrigin={undefined}

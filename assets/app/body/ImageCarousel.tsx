@@ -114,7 +114,7 @@ export function ImageCarousel() {
     }, []);
 
     return (
-        <div className={'shadow-md rounded-xl'}>
+        <div className={'my-shadow rounded-xl'}>
             <div className={'bg-white/70 p-2 rounded-t-xl text-center'}>
                 <Typography variant={'small'} placeholder={undefined}>
                     alttaki fotoğrafın açıklaması burada bulunacak

@@ -6,7 +6,7 @@ const TextAccordion: React.FC<{ data: { title: string, summary?: string, content
     const [open, setOpen] = useState<number>(1);
     const handleOpen = (value: number) => setOpen(value === open ? 0 : value);
     return (
-        <div className={'pr-8'}>
+        <div>
             {data.map((item, index) => (
                 <Accordion key={`accordion_${index}`} placeholder={undefined} open={open === (index + 1)}
                            icon={<Icon id={(index + 1)} open={open}/>}>
@@ -23,7 +23,6 @@ const TextAccordion: React.FC<{ data: { title: string, summary?: string, content
 
 const TextAccordionBody: React.FC<{ content: string, summary?: string }> = ({content, summary}) => {
     const [showContent, setShowContent] = useState<boolean>(!summary);
-    // TODO: Implement animation and another button
     return (
         <ChangeTransition state={showContent}>
             <p>
