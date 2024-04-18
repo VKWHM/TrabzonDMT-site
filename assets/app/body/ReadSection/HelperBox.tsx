@@ -1,5 +1,5 @@
 import SearchBox from "./SearchBox.tsx";
-import {Chip, IconButton, Tooltip} from "@material-tailwind/react";
+import {Chip, IconButton, List, ListItem, Tooltip} from "@material-tailwind/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpFromBracket, faBackward, faForward} from "@fortawesome/free-solid-svg-icons";
 
@@ -46,9 +46,16 @@ export const HelperBox: React.FC = () => {
                     </Tooltip>
                 </div>
                 <Chip
+                    className={'text-black'}
                     size={iconSize}
+                    variant={'outlined'}
                     value="24 Ocak"/>
             </div>
+            <List
+                className={'hidden'}
+                placeholder={undefined}>
+                <ListItem placeholder={undefined}>Test</ListItem>
+            </List>
         </div>
     );
 };
