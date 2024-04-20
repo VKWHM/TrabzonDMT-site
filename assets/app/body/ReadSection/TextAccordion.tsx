@@ -25,7 +25,7 @@ const TextAccordionBody: React.FC<{ content: string, summary?: string }> = ({con
     const [showContent, setShowContent] = useState<boolean>(!summary);
     return (
         <ChangeTransition state={showContent}>
-            <p>
+            <div>
                 {showContent ? (
                     <>
                         <p>{content}</p>
@@ -47,7 +47,7 @@ const TextAccordionBody: React.FC<{ content: string, summary?: string }> = ({con
                                 className={'mt-3 font-semibold'}>Detaylı Oku</Button>
                     </>
                 )}
-            </p>
+            </div>
         </ChangeTransition>
     );
 };
