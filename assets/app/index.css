@@ -25,7 +25,6 @@ body {
     padding: 0;
     overflow-x: hidden;
     transition: background-color 0.5s;
-    @apply bg-gray-100/80
 }
 
 /*End body*/
