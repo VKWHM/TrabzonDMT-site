@@ -54,7 +54,7 @@ const DateSelector: React.FC = () => {
                     <FontAwesomeIcon size={'xl'} icon={faCaretRight}/>
                 </IconButton>
             </div>
-            <DaySelector month={currentMonth}/>
+            <DaySelector month={months.indexOf(currentMonth) + 1}/>
         </div>
     );
 };

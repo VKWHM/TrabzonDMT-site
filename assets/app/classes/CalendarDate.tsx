@@ -20,7 +20,7 @@ export class CalendarDate implements ICalendarDate {
 
 
     public static new({day, month, events, createdAt, id}: IDate) {
-        return new CalendarDate(id, day, month, createdAt, events);
+        return new this(id, day, month, createdAt, events);
     }
 
     public constructor(
@@ -78,6 +78,8 @@ export class CalendarDate implements ICalendarDate {
                 }
             });
     }
+
+    public use() {};
 
     public async response() {
         return await this._promise;

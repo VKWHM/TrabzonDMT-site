@@ -2,18 +2,15 @@ import Footer from './footer';
 import Body from './body';
 import Navbar from './navbar';
 import axios from 'axios';
-import {initialize} from "./components/Hooks.tsx";
-import {useEffect, useState} from "react";
+import {useInitializer} from "./components/Hooks.tsx";
+import {dateContext} from "./components/Contexts.tsx";
 
 import calendarIconLight from '../icons/calendarIconLight.png';
 
 axios.defaults.headers.get['Accept'] = 'application/ld+json';
 
 const App: React.FC = () => {
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        initialize().then(() => setTimeout(() => setLoading(false), 1000));
-    }, []);
+    const [loading, date] = useInitializer();
     return loading ? (
         <div className="flex flex-col items-center justify-center h-screen">
             <img src={calendarIconLight} alt="Loading..." className="animate-pulse max-w-[50vw]"/>
@@ -27,9 +24,11 @@ const App: React.FC = () => {
         </div>
     ) : (
         <div className={'flex flex-col bg-gray-100/80 '}>
-            <Navbar/>
-            <Body/>
-            <Footer/>
+            <dateContext.Provider value={date}>
+                <Navbar/>
+                <Body/>
+                <Footer/>
+            </dateContext.Provider>
         </div>
     );
 };
