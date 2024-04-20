@@ -1,11 +1,13 @@
 import axios from "axios";
+import {CalendarDate} from "./CalendarDate.tsx";
+import {getDate} from "../components/Hooks.tsx";
 
 export interface IEvent {
     id: string,
     date: {
         id: string,
-        day: number,
         month: number,
+        day: number,
     },
     title: string,
     summary?: string,
@@ -14,7 +16,8 @@ export interface IEvent {
     updatedAt: string,
 }
 
-export interface ICalendarEvent extends Omit<IEvent, 'createdAt' | 'updatedAt'> {
+export interface ICalendarEvent extends Omit<IEvent, 'createdAt' | 'updatedAt' | 'date'> {
+    date: CalendarDate
     createdAt: Date,
     updatedAt: Date,
 }
@@ -24,10 +27,10 @@ export class CalendarEvent implements ICalendarEvent {
 
     public constructor(
         public id: string,
-        private _date: { id: string; day: number; month: number; } = {
+        private _date: { id: string; month: number; day: number; } = {
             id: '',
-            day: 0,
             month: 0,
+            day: 0,
         },
         private _title: string = '',
         private _content: string = '',
@@ -84,7 +87,8 @@ export class CalendarEvent implements ICalendarEvent {
         return this._summary;
     }
 
-    public get date(): { id: string; day: number; month: number } {
-        return this._date;
+    public get date(): CalendarDate {
+        const {month, day} = this._date;
+        return getDate(month, day);
     }
 }

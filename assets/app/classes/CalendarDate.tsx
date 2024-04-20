@@ -1,5 +1,6 @@
 import {CalendarEvent} from './CalendarEvent.tsx';
 import axios, {AxiosError} from 'axios';
+import {getEvent} from "../components/Hooks.tsx";
 
 export interface IDate {
     id: string,
@@ -91,7 +92,7 @@ export class CalendarDate implements ICalendarDate {
     }
 
     public get events(): CalendarEvent[] {
-        return this._events.map(event => new CalendarEvent(event));
+        return this._events.map(event => getEvent(event));
     }
 
     public get createdAt(): Date {
