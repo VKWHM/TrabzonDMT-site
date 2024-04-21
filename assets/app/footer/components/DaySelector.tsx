@@ -26,7 +26,7 @@ export const DaySelector: React.FC<{ month: number }> = ({month}) => {
         getMonthDays(month), [month]);
     useEffect(() => {
         setCurrentDay(calendarDate?.month === month ? calendarDate.day : 0);
-    }, [month]);
+    }, [month, date]);
     return (
         <div
             className={'mx-auto w-[300px] sm:w-[500px] md:w-[650px] lg:w-[900px] mt-1 py-2 border-t-2 border-t-black rounded-t-lg shadow-md backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 bg-white pointer-events-auto'}>

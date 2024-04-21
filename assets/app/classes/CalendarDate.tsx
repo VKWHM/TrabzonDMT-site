@@ -1,6 +1,7 @@
 import {CalendarEvent} from './CalendarEvent.tsx';
 import axios, {AxiosError} from 'axios';
-import {getEvent} from "../components/Hooks.tsx";
+import {getDate, getEvent} from "../components/Hooks.tsx";
+import {months} from "../footer/DateSelector.tsx";
 
 export interface IDate {
     id: string,
@@ -81,6 +82,28 @@ export class CalendarDate implements ICalendarDate {
 
     public use() {};
 
+    public nextDate(): CalendarDate {
+        let date = new Date(new Date().getFullYear(), this._month - 1, this._day);
+        date.setDate(date.getDate() + 1);
+        let nextDate = getDate(date.getMonth() + 1, date.getDate());
+        while (!nextDate) {
+            date.setDate(date.getDate() + 1);
+            nextDate = getDate(date.getMonth() + 1, date.getDate());
+        }
+        return nextDate;
+    }
+
+    public previousDate(): CalendarDate {
+        let date = new Date(new Date().getFullYear(), this._month - 1, this._day);
+        date.setDate(date.getDate() - 1);
+        let previousDate = getDate(date.getMonth() + 1, date.getDate());
+        while (!previousDate) {
+            date.setDate(date.getDate() - 1);
+            previousDate = getDate(date.getMonth() + 1, date.getDate());
+        }
+        return previousDate;
+    }
+
     public async response() {
         return await this._promise;
     };
@@ -99,6 +122,10 @@ export class CalendarDate implements ICalendarDate {
 
     public get createdAt(): Date {
         return new Date(this._createdAt);
+    }
+
+    public name(): string {
+        return `${this._day} ${months[(this._month - 1) % 12]}`;
     }
 
 }
