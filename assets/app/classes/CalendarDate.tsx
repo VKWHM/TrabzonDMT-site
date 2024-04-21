@@ -120,6 +120,10 @@ export class CalendarDate implements ICalendarDate {
         return this._events.map(event => getEvent(event));
     }
 
+    public eventAt(index: number): CalendarEvent {
+        return getEvent(this._events[index]);
+    }
+
     public get createdAt(): Date {
         return new Date(this._createdAt);
     }
