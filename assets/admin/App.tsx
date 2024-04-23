@@ -53,6 +53,7 @@ function App() {
                 create={EventCreate}
                 recordRepresentation={"title"}
             />
+            <ResourceGuesser name={'image_informations'}/>
             <ResourceGuesser name={'users'} />
         </HydraAdmin>
 
