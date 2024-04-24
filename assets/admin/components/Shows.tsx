@@ -78,8 +78,8 @@ export const ImageShow = (props: ShowGuesserProps) => {
     return (
         <ShowGuesser {...props} aside={<Aside/>}>
             <SimpleShowLayout>
-                <FieldGuesser source="imageName"/>
                 <FieldGuesser source="description"/>
+                <FieldGuesser source="imageName"/>
                 <ImageField source={"imageUrl"}/>
             </SimpleShowLayout>
         </ShowGuesser>
