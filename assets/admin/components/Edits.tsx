@@ -2,6 +2,7 @@ import {EditGuesser, EditGuesserProps, InputGuesser} from "@api-platform/admin";
 import {AutocompleteInput, ImageField, ReferenceInput, required, TextInput} from "react-admin";
 
 export const EventEdit = (props: EditGuesserProps) => {
+    // @ts-ignore
     const filterToQuery = searchText => {
         const [day, month] = searchText.split("/");
         return {
@@ -29,7 +30,7 @@ export const EventEdit = (props: EditGuesserProps) => {
 
 export const ImageEdit = (props: EditGuesserProps) => {
     return (
-        <EditGuesser>
+        <EditGuesser {...props}>
             <InputGuesser source={'description'} label={'Description'} fullWidth={true}/>
             <ImageField source="imageUrl"/>
         </EditGuesser>

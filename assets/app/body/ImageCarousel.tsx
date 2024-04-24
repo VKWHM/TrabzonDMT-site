@@ -137,7 +137,7 @@ export function ImageCarousel() {
                 navigation={navigation}
             >
                 <img
-                    src="/images/15_-_İpekyolu_ticareti.jpg"
+                    src="/images/15_-_ipekyolu_ticareti.jpg"
                     alt="image 1"
                     className="h-fit max-h-56 sm:max-h-96 mx-auto object-cover"
                 />

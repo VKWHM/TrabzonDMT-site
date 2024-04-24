@@ -2,6 +2,7 @@ import {CreateGuesser, CreateGuesserProps} from "@api-platform/admin";
 import {AutocompleteInput, ImageField, ImageInput, ReferenceInput, required, TextInput} from "react-admin";
 
 export const EventCreate = (props: CreateGuesserProps) => {
+    // @ts-ignore
     const filterToQuery = searchText => {
       const [day, month] = searchText.split("/");
       return {
@@ -29,7 +30,7 @@ export const EventCreate = (props: CreateGuesserProps) => {
 
 export const ImageCreate = (props: CreateGuesserProps) => {
     return (
-        <CreateGuesser>
+        <CreateGuesser {...props}>
             <TextInput source={'description'} label={'Description'} fullWidth={true}/>
             <ImageInput source={'image'} name={'image'} accept={['image/png', 'image/jpeg']} validate={[required()]}>
                 <ImageField source={'src'} title={'title'}/>
