@@ -13,7 +13,7 @@ class CalendarFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        CalendarDateFactory::createMany(100);
-        CalendarEventFactory::createMany(150);
+        CalendarDateFactory::createMany(300);
+        CalendarEventFactory::createMany(450);
     }
 }

@@ -53,11 +53,12 @@ export function useInitializer(): [boolean, string] {
     }
 
     useEffect(() => {
-        axios.get('/api/calendar_dates')
+        axios.get('/api/calendar_dates?pagination=false')
             .then(response => response.data['hydra:member'])
             .then((dates: IDate[]) => {
                 dates.forEach(date => {
                     const cd = UseCalendarDate.new(date);
+                    if (cd.month === 1) console.log(cd);
                     datesContainer[cd.id] = cd;
                 });
             })
@@ -73,7 +74,7 @@ export function useInitializer(): [boolean, string] {
                     console.error('An unexpected error occurred:', error);
                 }
             });
-        axios.get('/api/image_informations')
+        axios.get('/api/image_informations?pagination=false')
             .then(response => response.data['hydra:member'])
             .then((images: IImageInfo[]) => {
                 imagesContainer = images;
