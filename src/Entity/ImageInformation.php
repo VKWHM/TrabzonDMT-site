@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
+use ArrayObject;
 use App\Trait\Timestampable;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\OpenApi\Model;
-use ApiPlatform\Metadata\Patch;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\ImageInformationRepository;
 use App\Controller\CreateImageActionController;
@@ -16,19 +19,23 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 #[ApiResource(
     operations: [
         new Get(),
         new GetCollection(),
-        new Patch(),
-// TODO: Add delete operation to the image information resource
-//        new Delete(),
+        new Put(
+            security: "is_granted('ROLE_USER')"
+        ),
+        new Delete(
+            security: "is_granted('ROLE_USER')"
+        ),
         new Post(
             controller: CreateImageActionController::class,
             openapi: new Model\Operation(
                 requestBody: new Model\RequestBody(
-                    content: new \ArrayObject([
+                    content: new ArrayObject([
                         'multipart/form-data' => [
                             'schema' => [
                                 'type' => 'object',
@@ -69,9 +76,16 @@ class ImageInformation
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups(['image_information:read'])]
+    #[ApiProperty(identifier: true)]
     private ?int $id = null;
 
+
+    #[SerializedName("@id")]
+    #[Groups(['image_information:read'])]
+    public ?int $aid = null;
+
     #[ORM\Column(length: 255, unique: true, nullable: true)]
+    #[Groups(['image_information:read'])]
     private ?string $imageName = null;
 
     #[Groups(['image_information:read'])]
@@ -104,12 +118,17 @@ class ImageInformation
         return $this->id;
     }
 
+    public function getAid(): string
+    {
+        return "/api/image_informations/".$this->id;
+    }
+
     public function getImageName(): ?string
     {
         return $this->imageName;
     }
 
-    public function setImageName(string $imageName): static
+    public function setImageName(?string $imageName): static
     {
         $this->imageName = $imageName;
 

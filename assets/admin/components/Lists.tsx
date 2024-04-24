@@ -1,11 +1,5 @@
 import {FieldGuesser, ListGuesser, ListGuesserProps} from "@api-platform/admin";
-import {
-    NumberField,
-    ReferenceArrayField,
-    ReferenceField,
-    SingleFieldList,
-    ChipField,
-} from "react-admin";
+import {ChipField, NumberField, ReferenceArrayField, ReferenceField, SingleFieldList} from "react-admin";
 
 export const DateList = (props: ListGuesserProps) => {
     return (
@@ -34,3 +28,12 @@ export const EventList = (props: ListGuesserProps) => {
         </ListGuesser>
     )
 }
+
+export const ImageList = (props: ListGuesserProps) => {
+    return (
+        <ListGuesser {...props}>
+            <FieldGuesser source={"imageName"} label={"File Name"}/>
+            <FieldGuesser source={"description"} label={"Description"}/>
+        </ListGuesser>
+    );
+};

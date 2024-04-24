@@ -25,7 +25,9 @@ class ImageInformationNormalizer implements NormalizerInterface
     ): array|string|int|float|bool|\ArrayObject|null {
         $context[self::ALREADY_CALLED] = true;
 
-        $object->imageUrl = $this->storage->resolveUri($object, 'image');
+        if ($object instanceof ImageInformation) {
+            $object->imageUrl = $this->storage->resolveUri($object, 'image');
+        }
 
         return $this->normalizer->normalize($object, $format, $context);
     }

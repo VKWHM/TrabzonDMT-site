@@ -1,10 +1,10 @@
 import {AppBar, Layout, Options, ToggleThemeButton} from "react-admin";
 import {fetchHydra as baseFetchHydra, HydraAdmin, hydraDataProvider, ResourceGuesser} from "@api-platform/admin";
 import {parseHydraDocumentation} from "@api-platform/api-doc-parser";
-import {DateList, EventList} from "./components/Lists";
-import {DateShow, EventShow} from "./components/Shows";
-import {EventCreate} from "./components/Creates.tsx";
-import {EventEdit} from "./components/Edits.tsx";
+import {DateList, EventList, ImageList} from "./components/Lists";
+import {DateShow, EventShow, ImageShow} from "./components/Shows";
+import {EventCreate, ImageCreate} from "./components/Creates.tsx";
+import {EventEdit, ImageEdit} from "./components/Edits.tsx";
 import {authProvider} from "./components/utils/authProvider";
 
 const MyAppBar = () => <AppBar toolbar={<ToggleThemeButton/>}/>;
@@ -53,7 +53,13 @@ function App() {
                 create={EventCreate}
                 recordRepresentation={"title"}
             />
-            <ResourceGuesser name={'image_informations'}/>
+            <ResourceGuesser
+                create={ImageCreate}
+                list={ImageList}
+                show={ImageShow}
+                edit={ImageEdit}
+                name={'image_informations'}
+            />
             <ResourceGuesser name={'users'} />
         </HydraAdmin>
 

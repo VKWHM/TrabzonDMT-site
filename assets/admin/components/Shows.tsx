@@ -1,13 +1,14 @@
 import {FieldGuesser, ShowGuesser, ShowGuesserProps} from "@api-platform/admin";
 import {
-    DateField, FunctionField,
-    ReferenceField,
-    ReferenceArrayField,
-    SingleFieldList,
     ChipField,
+    FunctionField,
+    ImageField,
+    ReferenceArrayField,
+    ReferenceField,
     RichTextField,
     Show,
     SimpleShowLayout,
+    SingleFieldList,
     TabbedShowLayout,
     TextField,
     useRecordContext,
@@ -72,3 +73,15 @@ export const DateShow = (props: ShowGuesserProps) => {
       </ShowGuesser>
   );
 }
+
+export const ImageShow = (props: ShowGuesserProps) => {
+    return (
+        <ShowGuesser {...props} aside={<Aside/>}>
+            <SimpleShowLayout>
+                <FieldGuesser source="imageName"/>
+                <FieldGuesser source="description"/>
+                <ImageField source={"imageUrl"}/>
+            </SimpleShowLayout>
+        </ShowGuesser>
+    );
+};

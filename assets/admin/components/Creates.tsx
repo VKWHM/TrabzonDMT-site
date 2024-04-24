@@ -1,5 +1,5 @@
 import {CreateGuesser, CreateGuesserProps} from "@api-platform/admin";
-import {TextInput, required, ReferenceInput, AutocompleteInput} from "react-admin";
+import {AutocompleteInput, ImageField, ImageInput, ReferenceInput, required, TextInput} from "react-admin";
 
 export const EventCreate = (props: CreateGuesserProps) => {
     const filterToQuery = searchText => {
@@ -25,4 +25,15 @@ export const EventCreate = (props: CreateGuesserProps) => {
             <TextInput source={'content'} label={'Content'} fullWidth={true} multiline={true} validate={[required()]} />
         </CreateGuesser>
     )
+}
+
+export const ImageCreate = (props: CreateGuesserProps) => {
+    return (
+        <CreateGuesser>
+            <TextInput source={'description'} label={'Description'} fullWidth={true}/>
+            <ImageInput source={'image'} name={'image'} accept={['image/png', 'image/jpeg']} validate={[required()]}>
+                <ImageField source={'src'} title={'title'}/>
+            </ImageInput>
+        </CreateGuesser>
+    );
 }
