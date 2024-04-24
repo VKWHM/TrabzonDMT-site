@@ -4,6 +4,7 @@ import {Carousel, IconButton, Typography} from "@material-tailwind/react";
 import {FastAverageColor} from "fast-average-color";
 
 import {useCallback, useState} from "react";
+import {getImageInfo, getInitImageInfo, IImageInfo} from "../components/Hooks.tsx";
 
 const e_images: string[] = [];
 for (let i = 1; i < 10; i++) {
@@ -42,12 +43,15 @@ function getImageAverageColor(currentImageIndex: number) {
 
 
 export function ImageCarousel() {
-    const [images, setImages] = useState<string[]>(['/images/image-51.jpeg', '/images/image-52.jpeg']);
-    const addImage = useCallback((callback: () => void) => {
-        setImages(prev => {
-            const next = e_images.shift();
-            if (next) {
-                return [...prev, next];
+    const [imageInfos, setImageInfos] = useState<IImageInfo[]>(getInitImageInfo());
+    const [index, setIndex] = useState(0);
+    const addImage = useCallback((callback: () => void, index: number) => {
+        setImageInfos(prev => {
+            if (imageInfos.length + 1 <= (index + 1)) {
+                const next = getImageInfo(index + 1);
+                if (next) {
+                    return [...prev, next];
+                }
             }
             return prev;
         });
@@ -65,6 +69,7 @@ export function ImageCarousel() {
                 size="md"
                 onClick={() => {
                     handlePrev();
+                    setIndex(activeIndex);
                 }}
                 className="!absolute top-2/4 !left-4 -translate-y-2/4 bg-gray-400/50">
                 <FontAwesomeIcon icon={faAnglesLeft} size={'2xl'}/>
@@ -83,7 +88,8 @@ export function ImageCarousel() {
                 color={isDark ? "white" : "black"}
                 size="md"
                 onClick={() => {
-                    addImage(handleNext);
+                    addImage(handleNext, activeIndex);
+                    setIndex(activeIndex);
                 }}
                 className="!absolute top-2/4 !right-4 -translate-y-2/4 bg-gray-400/50">
                 <FontAwesomeIcon icon={faAnglesRight} size={'2xl'}/>
@@ -103,9 +109,10 @@ export function ImageCarousel() {
                         }`}
                         onClick={() => {
                             if (i + 1 === length) {
-                                addImage(() => setActiveIndex(i));
+                                addImage(() => setActiveIndex(i), activeIndex);
                             }
                             setActiveIndex(i);
+                            setIndex(activeIndex);
                         }}
                     />
                 ))}
@@ -117,7 +124,7 @@ export function ImageCarousel() {
         <div className={'my-shadow rounded-xl'}>
             <div className={'bg-white/70 p-2 rounded-t-xl text-center'}>
                 <Typography variant={'small'} placeholder={undefined}>
-                    alttaki fotoğrafın açıklaması burada bulunacak
+                    {imageInfos[index]?.description || "-"}
                 </Typography>
             </div>
             <Carousel
@@ -132,10 +139,10 @@ export function ImageCarousel() {
                     alt="image 1"
                     className="h-fit max-h-56 sm:max-h-96 mx-auto object-cover"
                 />
-                {images.map((image, index) => (
+                {imageInfos.map((iinfo, index) => (
                     <img
                         key={index}
-                        src={image}
+                        src={iinfo.imageUrl}
                         alt={`image ${index}`}
                         id={`carousel-image-${index}`}
                         className="transition h-fit max-h-56 sm:max-h-96 object-contain mx-auto"
