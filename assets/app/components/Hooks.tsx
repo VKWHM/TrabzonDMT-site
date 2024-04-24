@@ -58,7 +58,6 @@ export function useInitializer(): [boolean, string] {
             .then((dates: IDate[]) => {
                 dates.forEach(date => {
                     const cd = UseCalendarDate.new(date);
-                    if (cd.month === 1) console.log(cd);
                     datesContainer[cd.id] = cd;
                 });
             })
@@ -79,7 +78,6 @@ export function useInitializer(): [boolean, string] {
             .then((images: IImageInfo[]) => {
                 imagesContainer = images;
             })
-            .then(() => console.log(imagesContainer))
             .then(() => setTimeout(() => finished('images'), 1000))
             .catch(error => {
                 if (error instanceof axios.AxiosError) {

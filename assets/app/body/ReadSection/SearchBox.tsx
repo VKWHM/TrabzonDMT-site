@@ -9,6 +9,7 @@ const SearchBox = () => {
     return (
         <div className="relative flex w-full gap-2">
             <Input
+                disabled={true}
                 type="search"
                 color="black"
                 label="Search"
@@ -20,6 +21,7 @@ const SearchBox = () => {
                 crossOrigin={undefined}
             />
             <IconButton
+                disabled={true}
                 placeholder={undefined}
                 size="sm"
                 variant={'text'}

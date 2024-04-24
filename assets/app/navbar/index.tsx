@@ -1,24 +1,27 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Collapse, IconButton, MenuItem, Navbar, Typography} from "@material-tailwind/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faInfoCircle, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {aboutSourceContext} from "../components/Contexts.tsx";
 
 function NavList() {
+    const [, setAboutSource] = useContext(aboutSourceContext);
     return (
         <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
             <Typography
                 placeholder={undefined}
                 as="a"
-                href="#"
                 variant="small"
                 color="gray"
                 className="font-medium"
             >
-                <MenuItem className={'flex items-center gap-2 lg:rounded-md'}
-                          placeholder={undefined}>
+                <MenuItem
+                    onClick={() => setAboutSource(true)}
+                    className={'flex items-center gap-2 lg:rounded-md'}
+                    placeholder={undefined}>
                     <FontAwesomeIcon icon={faInfoCircle} className={'h-[20px] w-[20px]'}/>
                     <span className="font-bold">
-                        Hakkımızda
+                        Hakkımızda & Kaynakça
                     </span>
                 </MenuItem>
             </Typography>

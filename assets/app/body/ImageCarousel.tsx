@@ -3,13 +3,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Carousel, IconButton, Typography} from "@material-tailwind/react";
 import {FastAverageColor} from "fast-average-color";
 
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {getImageInfo, getInitImageInfo, IImageInfo} from "../components/Hooks.tsx";
-
-const e_images: string[] = [];
-for (let i = 1; i < 10; i++) {
-    e_images.push(`/images/image-5${i}.jpeg`);
-}
 
 type prevArrow = (args: {
     loop: boolean;
@@ -49,7 +44,7 @@ export function ImageCarousel() {
         setImageInfos(prev => {
             if (imageInfos.length + 1 <= (index + 1)) {
                 const next = getImageInfo(index + 1);
-                if (next) {
+                if (next && !prev.find(ii => ii.id === next.id)) {
                     return [...prev, next];
                 }
             }
@@ -99,6 +94,12 @@ export function ImageCarousel() {
 
     const navigation: navigation = useCallback(({setActiveIndex, activeIndex, length}) => {
         const isDark = getImageAverageColor(activeIndex);
+        useEffect(() => {
+            if (index !== activeIndex) {
+                addImage(() => {}, activeIndex);
+                setIndex(activeIndex);
+            }
+        }, [activeIndex]);
         return (
             <div className="absolute bottom-6 left-2/4 z-5 flex -translate-x-2/4 gap-2">
                 {new Array(length).fill("").map((_, i) => (
@@ -128,6 +129,7 @@ export function ImageCarousel() {
                 </Typography>
             </div>
             <Carousel
+                autoplay={true}
                 prevArrow={prevArrow}
                 nextArrow={nextArrow}
                 placeholder={undefined}
@@ -135,7 +137,7 @@ export function ImageCarousel() {
                 navigation={navigation}
             >
                 <img
-                    src="/images/image.jpeg"
+                    src="/images/15_-_İpekyolu_ticareti.jpg"
                     alt="image 1"
                     className="h-fit max-h-56 sm:max-h-96 mx-auto object-cover"
                 />

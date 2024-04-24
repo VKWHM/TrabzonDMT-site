@@ -85,6 +85,3 @@ dist-ssr
 /node_modules/
 /public/build/
 ###< pentatrion/vite-bundle ###
-
-# Local development images
-/public/images/

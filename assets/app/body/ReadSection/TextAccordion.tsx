@@ -1,15 +1,24 @@
 import React, {useState} from 'react';
 import {Accordion, AccordionBody, AccordionHeader, Button} from "@material-tailwind/react";
 import ChangeTransition from '../../components/ChangeTransition';
-import {CalendarEvent} from "../../classes/CalendarEvent.tsx";
+import {CalendarEvent} from '../../classes/CalendarEvent';
 
-const TextAccordion: React.FC<{ events: CalendarEvent[] }> = ({events}) => {
+interface ITextAccordion {
+    events: ({
+        id?: number
+        title: string,
+        summary?: string,
+        content: React.ReactNode,
+    } | CalendarEvent)[];
+}
+
+const TextAccordion: React.FC<ITextAccordion> = ({events}) => {
     const [open, setOpen] = useState<number>(1);
     const handleOpen = (value: number) => setOpen(value === open ? 0 : value);
     return (
         <div>
             {events.map((event, index) => (
-                <Accordion key={`accordion_${event.id}`} placeholder={undefined} open={open === (index + 1)}
+                <Accordion key={`accordion_${event?.id || index}`} placeholder={undefined} open={open === (index + 1)}
                            icon={<Icon id={(index + 1)} open={open}/>}>
                     <AccordionHeader placeholder={undefined}
                                      onClick={() => handleOpen(index + 1)}>{event.title}</AccordionHeader>
@@ -22,7 +31,7 @@ const TextAccordion: React.FC<{ events: CalendarEvent[] }> = ({events}) => {
     );
 };
 
-const TextAccordionBody: React.FC<{ content: string, summary?: string }> = ({content, summary}) => {
+const TextAccordionBody: React.FC<{ content: React.ReactNode, summary?: string }> = ({content, summary}) => {
     const [showContent, setShowContent] = useState<boolean>(!summary);
     return (
         <ChangeTransition state={showContent}>

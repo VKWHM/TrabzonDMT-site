@@ -18,6 +18,7 @@ export const HelperBox: React.FC = () => {
                 <SearchBox/>
                 <Tooltip content="Share">
                     <IconButton
+                        disabled={true}
                         color={'white'}
                         placeholder={undefined}>
                         <FontAwesomeIcon
@@ -35,7 +36,7 @@ export const HelperBox: React.FC = () => {
                     className={'text-black'}
                     size={iconSize}
                     variant={'outlined'}
-                    value={cdate ? cdate.name() : 'Select One'}/>
+                    value={cdate ? cdate.name() : 'Tarih Seçin'}/>
             </div>
             <List
                 className={'hidden'}
