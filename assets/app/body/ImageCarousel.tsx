@@ -129,6 +129,7 @@ export function ImageCarousel() {
                 </Typography>
             </div>
             <Carousel
+                autoplayDelay={12500}
                 autoplay={true}
                 prevArrow={prevArrow}
                 nextArrow={nextArrow}

@@ -17,8 +17,12 @@ const ReadSection: React.FC = () => {
     const [aboutSource, setAboutSource] = useContext(aboutSourceContext);
     const events = useMemo(() => getDateByID(date)?.events, [date]);
     useEffect(() => {
-        if (!events) return;
+        const cd = getDateByID(date);
+        if (!events || !cd) return;
         if (aboutSource) setAboutSource(false);
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('id', cd.originalID().toString());
+        window.history.replaceState('', document.title, `${window.location.pathname}?${urlParams.toString()}${window.location.hash}`);
         setLoading(true);
         Promise.all(events.map(event => event.response()))
             .then(() => setTimeout(() => setLoading(false), 300));

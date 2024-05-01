@@ -133,5 +133,9 @@ export class CalendarDate implements ICalendarDate {
         return `${this._day} ${months[(this._month - 1) % 12]}`;
     }
 
+    public originalID(): number {
+        return +this.id.replace('/api/calendar_dates/', '');
+    }
+
 }
 

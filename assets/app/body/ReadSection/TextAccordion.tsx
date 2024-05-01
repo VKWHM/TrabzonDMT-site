@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Accordion, AccordionBody, AccordionHeader, Button} from "@material-tailwind/react";
 import ChangeTransition from '../../components/ChangeTransition';
 import {CalendarEvent} from '../../classes/CalendarEvent';
@@ -13,7 +13,10 @@ interface ITextAccordion {
 }
 
 const TextAccordion: React.FC<ITextAccordion> = ({events}) => {
-    const [open, setOpen] = useState<number>(1);
+    const [open, setOpen] = useState<number>(+window.location.hash.slice(1) || 1);
+    useEffect(() => {
+        window.location.hash = open.toString();
+    }, [open]);
     const handleOpen = (value: number) => setOpen(value === open ? 0 : value);
     return (
         <div>
