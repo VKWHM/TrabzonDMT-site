@@ -31,6 +31,7 @@ export class CalendarDate implements ICalendarDate {
         protected _createdAt: string = '',
         protected _events: string[] = [],
     ) {
+        if (this.id && this._day && this._month && this._createdAt && this._events) return;
         let requestUri: string;
         if (this.id !== '') {
             if (this._day && this._month) return;

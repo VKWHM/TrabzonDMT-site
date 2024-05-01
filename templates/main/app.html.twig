@@ -10,6 +10,8 @@
 {% block body %}
     <div id="root">
     </div>
+    <script id="date" type="application/json">{{ date|raw }}</script>
+    <script id="events" type="application/json">{{ events|raw }}</script>
 {% endblock %}
 
 {% block javascripts %}

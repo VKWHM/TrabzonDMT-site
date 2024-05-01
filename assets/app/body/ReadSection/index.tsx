@@ -5,6 +5,11 @@ import {aboutSourceContext, dateContext} from "../../components/Contexts.tsx";
 import {getDateByID} from "../../components/Hooks.tsx";
 import {Typography} from "@material-tailwind/react";
 
+function scrollToView() {
+    document.querySelector('#read_section')?.scrollIntoView({
+        behavior: 'smooth',
+    });
+}
 
 const ReadSection: React.FC = () => {
     const [loading, setLoading] = useState(false);
@@ -22,10 +27,9 @@ const ReadSection: React.FC = () => {
 
     useEffect(() => {
         if (!events) return;
-        document.querySelector('#read_section')?.scrollIntoView({
-            behavior: 'smooth',
-        });
+        scrollToView();
     }, [date, aboutSource]);
+
     return (
         <div className={'relative grid grid-rows-[auto_auto] md:grid-rows-none md:grid-cols-6 w-full'}>
             <div id={'read_section'} className={'md:col-span-2 row-span-1 text-center my-2 px-5'}>

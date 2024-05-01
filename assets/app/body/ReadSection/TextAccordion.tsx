@@ -38,7 +38,7 @@ const TextAccordionBody: React.FC<{ content: React.ReactNode, summary?: string }
             <div>
                 {showContent ? (
                     <>
-                        <p>{content}</p>
+                        {content}
                         {summary && (
                             <Button placeholder={undefined}
                                     size={'sm'}
@@ -49,7 +49,7 @@ const TextAccordionBody: React.FC<{ content: React.ReactNode, summary?: string }
                     </>
                 ) : (
                     <>
-                        <p>{summary}</p>
+                        {summary}
                         <Button placeholder={undefined}
                                 size={'sm'}
                                 variant={'outlined'}

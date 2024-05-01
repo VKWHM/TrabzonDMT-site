@@ -25,6 +25,10 @@ export interface ICalendarEvent extends Omit<IEvent, 'createdAt' | 'updatedAt' |
 export class CalendarEvent implements ICalendarEvent {
     protected _promise?: Promise<any>;
 
+    public static new({id, content, createdAt, updatedAt, title, summary, date}: IEvent) {
+        return new this(id, date, title, content, createdAt, updatedAt, summary);
+    }
+
     public constructor(
         public id: string,
         private _date: { id: string; month: number; day: number; } = {
@@ -38,6 +42,8 @@ export class CalendarEvent implements ICalendarEvent {
         private _updatedAt: string = '',
         private _summary: string | undefined = undefined,
     ) {
+        if (this.id && this._title && this._content && this._summary && this._date && this._createdAt && this._updatedAt) return;
+        if (!this.id) throw new Error("The 'id' property is required for creating a CalendarEvent instance.");
         this._promise = axios.get<IEvent>(this.id)
             .then(response => response.data)
             .then(data => {

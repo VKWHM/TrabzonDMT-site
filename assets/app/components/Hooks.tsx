@@ -1,6 +1,6 @@
 import axios from "axios";
 import {CalendarDate, IDate} from "../classes/CalendarDate.tsx";
-import {CalendarEvent} from "../classes/CalendarEvent.tsx";
+import {CalendarEvent, IEvent} from "../classes/CalendarEvent.tsx";
 import {useEffect, useState} from "react";
 
 const datesContainer: {
@@ -54,12 +54,36 @@ export function useInitializer(): [boolean, string] {
 
     useEffect(() => {
         axios.get('/api/calendar_dates?pagination=false')
-            .then(response => response.data['hydra:member'])
+            // @ts-ignore
+            .then(response => response.data['hydra:member'].map(date => {
+                date.id = date['@id'];
+                return date;
+            }))
             .then((dates: IDate[]) => {
                 dates.forEach(date => {
                     const cd = UseCalendarDate.new(date);
                     datesContainer[cd.id] = cd;
                 });
+            })
+            .then(() => {
+                const id: number = +(new URLSearchParams(window.location.search).get('id') || 0);
+                if (!isNaN(id) && id !== 0) {
+                    const dateElement = document.getElementById('date');
+                    if (dateElement !== null) {
+                        const date = JSON.parse(JSON.parse(dateElement.innerText));
+                        datesContainer[date['@id']]?.use();
+                    }
+                    const eventsElement = document.getElementById('events');
+                    if (eventsElement !== null) {
+                        const events = JSON.parse(JSON.parse(eventsElement.innerText));
+                        // @ts-ignore
+                        events.forEach(event => {
+                            event.id = event['@id'] as IEvent;
+                            const ce = CalendarEvent.new(event);
+                            eventsContainer[ce.id] = ce;
+                        });
+                    }
+                }
             })
             .then(() => setTimeout(() => finished('dates'), 1000))
             .catch(error => {
