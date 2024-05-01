@@ -1,0 +1,17 @@
+ErrorDocument 404 http://trabzondmt.com.tr/404.html
+<IfModule mod_rewrite.c>
+    Options +FollowSymLinks
+    RewriteBase /
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+# Prevent Directories Listing
+Options -Indexes
+<files .htaccess>
+Order allow,deny
+Deny from all
+</files>
+
+# Redirect to https version
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

@@ -1,0 +1,13 @@
+{
+  "web_apps": [
+    {
+      "manifest": "https://trabzondmt.com.tr/manifest.json",
+      "details": {
+        "paths": [
+          "/*"
+        ],
+        "exclude_paths": []
+      }
+    }
+  ]
+}

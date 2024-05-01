@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /tt*
+Sitemap: https://trabzondmt.com.tr/sitemap.xml
