@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {Accordion, AccordionBody, AccordionHeader, Button} from "@material-tailwind/react";
 import ChangeTransition from '../../components/ChangeTransition';
 import {CalendarEvent} from '../../classes/CalendarEvent';
@@ -12,10 +12,19 @@ interface ITextAccordion {
     } | CalendarEvent)[];
 }
 
+let first = 0;
+
 const TextAccordion: React.FC<ITextAccordion> = ({events}) => {
-    const [open, setOpen] = useState<number>(+window.location.hash.slice(1) || 1);
+    const [open, setOpen] = useState<number>(((first < 3) && +window.location.hash.slice(1)) || 1);
     useEffect(() => {
+        first++;
         window.location.hash = open.toString();
+        window.onhashchange = () => {
+            const hash = +window.location.hash.slice(1);
+            if (!isNaN(hash) && hash !== open) {
+                setOpen(hash);
+            }
+        };
     }, [open]);
     const handleOpen = (value: number) => setOpen(value === open ? 0 : value);
     return (
@@ -80,4 +89,4 @@ const Icon: React.FC<{ id: number, open: number }> = ({id, open}) => {
     );
 };
 
-export default TextAccordion;
+export default memo(TextAccordion);

@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpFromBracket, faBackward, faForward} from "@fortawesome/free-solid-svg-icons";
 import {useContext, useMemo, useState} from "react";
 import {getDateByID} from "../../components/Hooks.tsx";
-import {dateContext} from "../../components/Contexts.tsx";
+import {aboutSourceContext, dateContext} from "../../components/Contexts.tsx";
 import {CalendarDate} from "../../classes/CalendarDate.tsx";
 import {CalendarEvent} from "../../classes/CalendarEvent.tsx";
 
@@ -79,6 +79,7 @@ const Forward: React.FC<{ date?: CalendarDate }> = ({date}) => {
 
 const Share: React.FC<{ date: CalendarDate }> = ({date}) => {
     const [text, setText] = useState('Paylaş');
+    const [aboutSource] = useContext(aboutSourceContext);
     const handleClick = () => {
         const open = +window.location.hash.slice(1);
         let event: CalendarEvent | undefined;
@@ -103,6 +104,7 @@ const Share: React.FC<{ date: CalendarDate }> = ({date}) => {
     return (
         <Tooltip content={text}>
             <IconButton
+                disabled={!!aboutSource}
                 onClick={handleClick}
                 color={'white'}
                 placeholder={undefined}>

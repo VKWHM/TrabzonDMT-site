@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import {Collapse, IconButton, MenuItem, Navbar, Typography} from "@material-tailwind/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBars, faInfoCircle, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faBookBookmark, faInfoCircle, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {aboutSourceContext} from "../components/Contexts.tsx";
 
 function NavList() {
@@ -16,12 +16,35 @@ function NavList() {
                 className="font-medium"
             >
                 <MenuItem
-                    onClick={() => setAboutSource(true)}
+                    onClick={() => {
+                        window.location.hash = '1';
+                        setAboutSource(true);
+                    }}
                     className={'flex items-center gap-2 lg:rounded-md'}
                     placeholder={undefined}>
                     <FontAwesomeIcon icon={faInfoCircle} className={'h-[20px] w-[20px]'}/>
                     <span className="font-bold">
-                        Hakkımızda & Kaynakça
+                        Hakkımızda
+                    </span>
+                </MenuItem>
+            </Typography>
+            <Typography
+                placeholder={undefined}
+                as="a"
+                variant="small"
+                color="gray"
+                className="font-medium"
+            >
+                <MenuItem
+                    onClick={() => {
+                        window.location.hash = '2';
+                        setAboutSource(true);
+                    }}
+                    className={'flex items-center gap-2 lg:rounded-md'}
+                    placeholder={undefined}>
+                    <FontAwesomeIcon icon={faBookBookmark} className={'h-[20px] w-[20px]'}/>
+                    <span className="font-bold">
+                        Kaynakça
                     </span>
                 </MenuItem>
             </Typography>

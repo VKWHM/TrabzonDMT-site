@@ -102,21 +102,24 @@ export function ImageCarousel() {
         }, [activeIndex]);
         return (
             <div className="absolute bottom-6 left-2/4 z-5 flex -translate-x-2/4 gap-2">
-                {new Array(length).fill("").map((_, i) => (
+                {new Array(Math.min(10, activeIndex + 4)).fill("").map((_, i) => {
+                    const index = activeIndex > 10 ? i + (10 * Math.floor(activeIndex / 10)) : i;
+                    return (
                     <span
-                        key={i}
+                        key={index}
                         className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                            activeIndex === i ? `w-8 ${isDark ? "bg-white" : "bg-black"}` : `w-4 ${isDark ? "bg-white/50" : "bg-gray-900/50"}`
+                            activeIndex === index ? `w-8 ${isDark ? "bg-white" : "bg-black"}` : `w-4 ${isDark ? "bg-white/50" : "bg-gray-900/50"}`
                         }`}
                         onClick={() => {
-                            if (i + 1 === length) {
-                                addImage(() => setActiveIndex(i), activeIndex);
+                            if (index + 1 === length) {
+                                addImage(() => setActiveIndex(index), activeIndex);
                             }
-                            setActiveIndex(i);
+                            setActiveIndex(index);
                             setIndex(activeIndex);
                         }}
                     />
-                ))}
+                    )
+                })}
             </div>
         );
     }, []);

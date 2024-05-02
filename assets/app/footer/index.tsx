@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
                   placeholder={"Created By Rayan Ali Salem"}
                   className={"bg-black py-1 text-center text-white"}
               >
-                  Created By <span className={"font-bold"}>Rayan Ali Salem </span>©
+                  {/*Created By <span className={"font-bold"}>Rayan Ali Salem </span>©*/}
                   {year - 1}-{year} All Rights Reserved.
               </Typography>
           </footer>
